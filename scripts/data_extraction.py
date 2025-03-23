@@ -1,6 +1,4 @@
 #API Extraction into MongoDB
-
-
 ''' List of dependencies used in data extraction and ingestion into MongoDB '''
 import requests
 import pandas as pd
@@ -11,9 +9,10 @@ import re
 import sys
 
 '''Adds in settings from the config file to be able to have cleaner code.'''
-sys.path.append((os.getcwd()))
-from config import settings
+config_path = os.getcwd().replace('\\scripts','')
+sys.path.insert(0, config_path)
 
+from config import settings
 '''
 USDA_API
 
@@ -107,7 +106,7 @@ class MongoDB():
         self.db_name = default_db
         self.col_name = default_col
         self.schema = schema
-        self.client = pymongo.MongoClient(f"mongodb+srv://{self.username}:{self.password}@usdacluster.s1juy.mongodb.net/?retryWrites=true&w=majority&appName={self.cluster_name}")
+        self.client = MongoClient(settings.mongo_client)
         
     def test_connectivity(self):
         try:
@@ -134,7 +133,7 @@ class MongoDB():
             client.insert_one(self.schema)
         else:
             return 'collection already exists'
-
+            
     def add_record(self, data, col):
         self.client[self.db_name][col].insert_many(data)
 
@@ -147,17 +146,23 @@ def create_mongo_year_list(start_year):
             mongo_year_list.append(int(i))
     return mongo_year_list
 
+def drop_db_if_exists(db_name):
+    if db_name in MongoClient(settings.mongo_client).list_database_names():
+        MongoClient(settings.mongo_client).drop_database(db_name)
+    else:
+        return 0
+    
+drop_db_if_exists(settings.mongo_default_db)
 
-mongo_instance = MongoDB(username=settings.mongo_username,
-                         password=settings.mongo_password, \
+mongo_instance = MongoDB(username= settings.mongo_username,
+                         password= settings.mongo_password, \
                          default_db = settings.mongo_default_db, \
                          default_col = settings.mongo_default_colname, \
                          default_clusterName= settings.mongo_default_clusterName, \
-                         schema = settings.default_schema)
+                         schema = settings.mongo_default_schema)
 
 mongo_instance.test_connectivity()
 mongo_instance.initialize()
-
 '''
 Populate_nosql()
 
@@ -183,6 +188,7 @@ def populate_nosql():
                 if  mongo_instance.test_connectivity() == '1' and type(current_doc) != str:
                     mongo_instance.add_new_col(col_title)
                     mongo_instance.add_record(current_doc, col_title)
+                    mongo_instance.drop_col(settings.mongo_default_colname)
 
                 data.remove_params('commodity_desc')
                 data.remove_params('year')
@@ -190,6 +196,5 @@ def populate_nosql():
                 print(f"Error {e}, {data.call()}")
                 data.remove_params('commodity_desc')
                 data.remove_params('year')       
-
 
 populate_nosql()

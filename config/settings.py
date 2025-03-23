@@ -2,9 +2,9 @@ import os
 import sys
 
 
+
 #API Key
 usda_key = os.environ['usda_key']
-
 usda_commodity_list = ['congr_district_code', 'state_name', 'week_ending', 'county_name',
        'prodn_practice_desc', 'county_ansi', 'statisticcat_desc', 'CV (%)',
        'Value', 'country_name', 'begin_code', 'end_code', 'state_alpha',
@@ -17,12 +17,15 @@ usda_commodity_list = ['congr_district_code', 'state_name', 'week_ending', 'coun
        'commodity_desc']
 
 #Mongo Variables
+
 mongo_username = os.environ['mongo_username']
 mongo_password = os.environ['mongo_password']
-
 mongo_default_clusterName = 'USDACluster'
+
+mongo_client = f"mongodb+srv://{mongo_username}:{mongo_password}@usdacluster.s1juy.mongodb.net/?retryWrites=true&w=majority&appName={mongo_default_clusterName}"
 mongo_default_db = 'USDA'
 mongo_default_colname = 'dummy_col'
+
 
 mongo_default_schema = {'domaincat_desc': None, 'year': None, 'watershed_code': None,'watershed_desc': None, 'country_code': None,
  'county_code': None,'sector_desc': None, 'region_desc': None, 'begin_code': None,'end_code': None, 'state_alpha': None,
