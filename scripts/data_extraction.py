@@ -72,6 +72,11 @@ class USDA_API():
             try:
                 response = self.session.get(self.return_call())
                 response.raise_for_status()
+
+                if response.status_code == 429:
+                    time.sleep(retry_delay)
+                    retry_delay *= 2
+
                 if response.status_code == 200:
                     get_counts = self.session.get(f'{self.url}/get_counts/?key={self.key}{self.params}').json()
             
@@ -80,12 +85,8 @@ class USDA_API():
                     else:
                         return response.json()['data']
                 
-            except requests.exceptions.HTTPError as errh:
-                time.sleep(retry_delay)
-                retry_delay *= 2
-                retry_delay += random.uniform(0,1)
-
-        return f"HTTP Error: {errh}, {response.status_code}"
+            except requests.exceptions.HTTPError:
+                return f"HTTP Error: {response.status_code}"
             
     
     def get_param_values(self, field):
