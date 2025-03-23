@@ -173,6 +173,7 @@ mongo_instance = MongoDB(username= settings.mongo_username,
 
 mongo_instance.test_connectivity()
 mongo_instance.initialize()
+
 '''
 Populate_nosql()
 
