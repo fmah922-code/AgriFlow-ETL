@@ -1,8 +1,6 @@
 import os
 import sys
 
-
-
 #API Key
 usda_key = os.environ['usda_key']
 usda_commodity_list = ['congr_district_code', 'state_name', 'week_ending', 'county_name',
