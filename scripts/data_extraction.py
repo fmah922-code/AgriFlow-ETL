@@ -7,6 +7,8 @@ from pymongo.mongo_client import MongoClient
 import pymongo
 import re
 import sys
+import time
+import random
 
 '''Adds in settings from the config file to be able to have cleaner code.'''
 config_path = os.getcwd().replace('\\scripts','')
@@ -26,6 +28,7 @@ USDA_API class built from http://quickstats.nass.usda.gov/api
 - call makes a request to the API which returns as a JSON object, handles errors including api throttling issues.
 - get_param_values will list all possible values for any specific filter to be added onto API
 '''
+
 
 
 class USDA_API():
@@ -63,20 +66,26 @@ class USDA_API():
             self.params = self.params
             print('No Parameters to remove')
 
-    def call(self):
-        try:
-            response = self.session.get(self.return_call())
-            response.raise_for_status()
-            if response.status_code == 200:
-                get_counts = self.session.get(f'{self.url}/get_counts/?key={self.key}{self.params}').json()
+    def call(self, max_retries=10):
+        retry_delay = 1
+        for attempt in range(max_retries):
+            try:
+                response = self.session.get(self.return_call())
+                response.raise_for_status()
+                if response.status_code == 200:
+                    get_counts = self.session.get(f'{self.url}/get_counts/?key={self.key}{self.params}').json()
             
-                if get_counts['count'] >= 50000:
-                    return f'Unable to Process Request. Request is greater than 50000 rows'
-                else:
-                    return response.json()['data']
+                    if get_counts['count'] >= 50000:
+                        return f'Unable to Process Request. Request is greater than 50000 rows'
+                    else:
+                        return response.json()['data']
                 
-        except requests.exceptions.HTTPError as errh:
-            return f"HTTP Error: {errh}, {response.status_code}"
+            except requests.exceptions.HTTPError as errh:
+                time.sleep(retry_delay)
+                retry_delay *= 2
+                retry_delay += random.uniform(0,1)
+
+        return f"HTTP Error: {errh}, {response.status_code}"
             
     
     def get_param_values(self, field):
