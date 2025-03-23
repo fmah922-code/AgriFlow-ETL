@@ -1,5 +1,7 @@
 #API Extraction into MongoDB
-''' List of dependencies used in data extraction and ingestion into MongoDB '''
+'''Data Extraction from API to MongoDB ~ 2 hrs'''
+
+''' List of dependencies used in data extraction and ingestion into MongoDB'''
 import requests
 import pandas as pd
 import os

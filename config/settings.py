@@ -32,3 +32,11 @@ mongo_default_schema = {'domaincat_desc': None, 'year': None, 'watershed_code': 
  'zip_5': None, 'load_time': None, 'agg_level_desc': None, 'commodity_desc': None, 'unit_desc': None, 'source_desc': None,
  'class_desc': None, 'state_ansi': None, 'short_desc': None, 'asd_code': None, 'location_desc': None, 'util_practice_desc': None,
  'asd_desc': None, 'state_fips_code': None, 'freq_desc': None,  'domain_desc': None, 'group_desc': None}
+
+#Excluded Commodities 
+
+excluded_commodities = ['CONSUMERPRICEINDEX','COLDSTORAGECAPACITY','NON-CITRUSOTHER',
+'CITRUSOTHER','VEGETABLESOTHER','PROPAGATIVEMATERIAL','DAIRYPRODUCTSOTHER','FIELDCROPSOTHER',
+'ANIMALSOTHER', 'MACHINERYOTHER', 'PRODUCTIONITEMSCONSUMERPRICEINDEX', 'BUILDINGMATERIALS',
+'EXPENSESOTHER', 'PRICEINDEXRATIO', 'GRASSESLEGUMESOTHER', 'FOODCROPOTHER', 'FRUITOTHER',
+'POULTRYOTHER']
