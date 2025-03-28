@@ -1,5 +1,6 @@
 import os
 import sys
+from pyspark.sql.types import StructType, StructField, IntegerType, LongType, StringType, FloatType, DecimalType, DateType
 
 #API Key
 usda_key = os.environ['usda_key']
@@ -47,3 +48,12 @@ excluded_commodities = ['CONSUMERPRICEINDEX','COLDSTORAGECAPACITY','NON-CITRUSOT
 'COMMODITYTOTALS', 'SPECIALTYANIMALTOTALS', 'SHEEPGOATSTOTALS', 'NON-CITRUSTOTALS','FEEDPRICERATIO', 'FARMOPERATIONS', 'PRICEINDEXRATIO',
 'PRODUCERSPRIMARY','TRUCKSAUTOS','POULTRYBY-PRODUCTMEALS','PRACTICES','FOODCOMMODITIES','PRODUCTIONITEMS',
 'PLUM-APRICOTHYBRIDS']
+
+#Schema and Datatypes
+columns = ['_id','domaincat_desc','year','watershed_code','watershed_desc','country_code','county_code','sector_desc',
+         'region_desc','begin_code','end_code','state_alpha','statisticcat_desc','county_ansi','Value','country_name','week_ending',
+         'county_name','prodn_practice_desc','reference_period_desc', 'zip_5','reference_period_desc', 'zip_5', 'load_time', 'agg_level_desc',
+         'commodity_desc', 'unit_desc', 'source_desc', 'class_desc','state_ansi', 'short_desc', 'asd_code', 'location_desc','util_practice_desc', 'asd_desc', 
+         'state_fips_code', 'freq_desc','domain_desc', 'group_desc']
+
+#Initialization of SparkDF (will be changed later)
