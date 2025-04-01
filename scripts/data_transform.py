@@ -1,6 +1,6 @@
 '''
-Transformation 1: Removing any collections from MongoDB that have ambiguous names. \
-Transformation 2: Dropping off the first row which was a dummy null row\
+Transformation 1: Removing any collections from MongoDB that have ambiguous names. 
+Transformation 2: Dropping off the first row which was a dummy null row
 Transformation 3: Conversion collection columns to more appropriate datatypes. (not all strings)
 '''
 
@@ -18,7 +18,9 @@ sys.path.insert(0, config_path)
 
 from config import settings 
 
-spark = SparkSession.builder.getOrCreate()
+spark = SparkSession.builder \
+        .config("spark.jars", "C:\jdbc\postgresql-42.7.5.jar")\
+        .getOrCreate()
 
 mongo_conn = MongoClient(settings.mongo_client)[settings.mongo_default_db]
 
@@ -29,7 +31,7 @@ def drop_first_row(collection):
     altered_col = collection.iloc[1:]
     return altered_col 
 
-spark_rdd_list =[]
+spark_rdd_list = {}
 def populate_spark_rdd_list():
     for collection in mongo_conn.list_collection_names():
         test_df = drop_first_row(pd.DataFrame([item for item in mongo_conn.get_collection(collection).find()]))
@@ -60,8 +62,12 @@ def populate_spark_rdd_list():
                                .cast('int')) \
                             .withColumn('zip_5',
                                spark_df['zip_5'] \
-                               .cast('int'))
+                               .cast('int')) \
+                            .withColumn('load_time',
+                               spark_df['load_time'] \
+                               .cast('date')) \
+                            
 
-        spark_rdd_list.append(spark_df)
+        spark_rdd_list[collection] = spark_df
 
 populate_spark_rdd_list()
