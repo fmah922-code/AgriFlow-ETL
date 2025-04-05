@@ -65,14 +65,12 @@ def extract():
 
     return 1
 def transform_and_load(_int):
-    if _int == 1:
-        spark = SparkSession.builder \
-            .config("spark.jars", os.getcwd() + '\\' + 'postgresql-42.7.5.jar') \
+    spark = SparkSession.builder \
+            .config("spark.jars", 'C:\jdbc\postgresql-42.7.5.jar') \
             .getOrCreate()
+    mongo_conn = MongoClient(settings.mongo_client)[settings.mongo_default_db]
 
-
-        mongo_conn = MongoClient(settings.mongo_client)[settings.mongo_default_db]
-
+    if _int == 1:
         spark_rdd_list = {}
         for collection in mongo_conn.list_collection_names():
             if collection not in settings.excluded_commodities:
@@ -104,10 +102,7 @@ def transform_and_load(_int):
                                .cast('int')) \
                             .withColumn('zip_5',
                                spark_df['zip_5'] \
-                               .cast('int')) \
-                            .withColumn('load_time',
-                               spark_df['load_time'] \
-                               .cast('date')) \
+                               .cast('int'))
 
 
             spark_rdd_list[collection] = spark_df
@@ -120,8 +115,6 @@ def transform_and_load(_int):
             .option("dbtable", f"ag.{collection.replace('-','_')}") \
             .option("user", f"{settings.pgadmin_user}").option("password", f"{settings.pgadmin_password}") \
             .save()
-
-        spark.close()
 
     else:
         print('Error: Upstream Task Failed!')
