@@ -1,3 +1,12 @@
+'''
+USDA_API Class
+    - Built to encapsulate functionality of USDA_API methods
+    - API website: https://quickstats.nass.usda.gov/api
+    - handles most errors that were caught: API Throttling, unauthorized users, etc...
+    - Used to capture information from API which then moves the information into MongoDB
+    - Date Added: 04/04/2025
+'''
+
 import requests
 import os
 import sys
