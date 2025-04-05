@@ -1,3 +1,17 @@
+'''
+AgriFlow ETL Pipeline
+
+    - Pipeline which has multiple steps
+        - loads api responses into MongoDB.
+        - Coverts MongoDB collections into pyspark dataframes where schema is established
+        - utilizing a .jar file which allows data ingestion into PostgreSQL database USDA.
+
+    - Notes:
+        - limiting down with state_alpha = 'US'. Individual states wouldn't fit into 
+        MongoDB Cluster.
+'''
+
+
 import re
 import os
 import pandas as pd
@@ -53,7 +67,7 @@ def extract():
 def transform_and_load(_int):
     if _int == 1:
         spark = SparkSession.builder \
-            .config("spark.jars", os.getcwd() + '\\connections') \
+            .config("spark.jars", os.getcwd() + '\\' + 'postgresql-42.7.5.jar') \
             .getOrCreate()
 
 
