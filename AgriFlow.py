@@ -107,6 +107,8 @@ def transform_and_load(_int):
             .option("user", f"{settings.pgadmin_user}").option("password", f"{settings.pgadmin_password}") \
             .save()
 
+        spark.close()
+
     else:
         print('Error: Upstream Task Failed!')
 
