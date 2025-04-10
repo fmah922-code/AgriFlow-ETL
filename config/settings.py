@@ -20,8 +20,7 @@ usda_commodity_list = ['congr_district_code', 'state_name', 'week_ending', 'coun
 mongo_username = os.environ['mongo_username']
 mongo_password = os.environ['mongo_password']
 mongo_default_clusterName = 'USDACluster'
-
-mongo_client = f"mongodb+srv://{mongo_username}:{mongo_password}@usdacluster.s1juy.mongodb.net/?retryWrites=true&w=majority&appName={mongo_default_clusterName}"
+mongo_client = f"mongodb+srv://faiselmahmud6:{mongo_password}@usdacluster.c4u9qpj.mongodb.net/&appName={mongo_default_clusterName}"
 mongo_default_db = 'USDA'
 mongo_default_colname = 'dummy_col'
 
