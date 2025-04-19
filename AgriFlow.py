@@ -1,59 +1,33 @@
 import os
-import papermill as pm
-import datetime
-from airflow.decorators import dag, tasks
+import psycopg2
+import sys
+import time
 
-# from extract import initialize_mongo, drop_db_if_exists, extract
-# from transform import transform
-# from load import load
-
-# mongo_instance = initialize_mongo()
-# drop_db_if_exists(mongo_instance, 'USDA')
-# extract(mongo_instance)
-# spark_rdd_list = transform(mongo_instance)
-# load(spark_rdd_list)
-
+sys.path.append(os.path.join(os.getcwd(), 'etl_components'))
 
 from etl_components import extract as e, \
                            transform as t, \
                            load as l
 
-@dag(schedule_interval='@monthly',
-     start_date=datetime(2025,4,10),
-     tags='AgriFlow')
+mongo_instance = e.initialize_mongo()
+e.drop_db_if_exists(mongo_instance, 'USDA')
 
-def agriflow_etl_pipeline():
-    @task
-    def setup_mongo_task():
-        mongo_instance = e.initialize_mongo()
-        e.drop_db_if_exists(mongo_instance, 'USDA')
-        return mongo_instance
+e.extract(mongo_instance)
+print('Data extracted from QuickStats API')
+time.sleep(5)
 
-    @task
-    def extract_task(mongo_instance):
-        e.extract(mongo_instance)
-        return mongo_instance
+spark_rdd_list = t.transform(mongo_instance)
+print('Data transformed successfully!')
 
-    @task
-    def transform_and_load(mongo_instance):
-        """
-        Executes the AgriFlow Pipeline using papermill.
-        """
-        notebook_path = os.path.join(os.getcwd(), 'etl_components', 'agriflow_pipeline.ipynb')  
-        output_path = os.path.join(os.getcwd(), 'results', 'run_output.ipynb')
+rdd = t.union_rdd_list(spark_rdd_list)
+print('Data unioned to singular df succesfully!')
 
-        print("Starting execution of Jupyter Notebook...")
-        pm.execute_notebook(
-            notebook_path,
-            output_path,
-            kernel_name='python3'
-        )
+conn, cur = l.return_connection_details()
+conn.autocommit=True
 
-        print("Agriflow executed successfully!")
+with conn.cursor() as cursor:
+    l.create_staging_table(cursor)
+print('Schema created for landing table!')
 
-    mongo_instance = setup_mongo_task()
-    mongo_instance = extract_task(mongo_instance)
-    transform_and_load(mongo_instance)
-
-agriflow_etl_pipeline()
-
+l.populate_data(rdd,'ag.CropPrices', conn, cur)
+print('PostgreSQL successfully populated!')
