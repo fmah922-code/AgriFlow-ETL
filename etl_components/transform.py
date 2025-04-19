@@ -10,11 +10,6 @@ sys.path.append(os.getcwd().replace('\\etl_components',''))
 from config import settings
 from scripts import Spark_Operations as so
 
-sys.path.append(os.getcwd().replace('\\scripts',''))
-
-from config import settings
-
-
 
 def transform(mongo_conn):
         spark = SparkSession.builder \

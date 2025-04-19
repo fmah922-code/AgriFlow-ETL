@@ -1,10 +1,15 @@
 import psycopg2
 import psycopg2.extras
 import pandas as pd
+import sys, os
+
+sys.path.append(os.getcwd().replace('\\etl_components',''))
+
+from config import settings
 
 
 def return_connection_details():
-    conn = psycopg2.connect(f"host='localhost' port=5432 dbname='USDA_DB' user=fmahmud922 password=inlovewithgisselle922!")
+    conn = psycopg2.connect(f"host='localhost' port=5432 dbname='USDA_DB' user={settings.pgadmin_user} password={settings.pgadmin_password}")
 
     conn.autocommit=True
     cur = conn.cursor()

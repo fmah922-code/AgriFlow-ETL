@@ -3,6 +3,7 @@ import psycopg2
 import sys
 import time
 
+
 sys.path.append(os.path.join(os.getcwd(), 'etl_components'))
 
 from etl_components import extract as e, \
