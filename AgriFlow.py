@@ -57,3 +57,4 @@ with conn.cursor() as cursor:
 print('Schema created for landing table!')
 
 l.populate_data(rdd, 'ag.CropPrices', conn=conn)
+print('Table successfully populated in PostgreSQL')
