@@ -1,3 +1,11 @@
+'''
+Transform.py
+
+- Retrieves the collections inserted into mongodb and converts them into pyspark dataframes.
+- From there, a series of transformations occurs to only retrieve relevant data and using more efficient data types, as well as handling the mongodb provided object id for each row.
+- The pyspark dataframes are there converted into pandas dataframes which are unioned together
+'''
+
 import os
 import sys
 import pandas as pd

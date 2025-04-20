@@ -1,3 +1,12 @@
+'''
+Extract.py
+
+- Migrates data from the USDA API on https://quickstats.nass.usda.gov/api to Mongo database
+- Retrieves the last 10 years worth of data, from 2015 to 2025 and creates collections for each commodity (i.e Broccoli, Blueberries, Rice, etc...)
+- If adding in collection is a problem, for explainable reasons, it won't move a specific subset of usda api to a mongo db.
+'''
+
+
 import re
 import os
 import sys
@@ -21,8 +30,6 @@ def initialize_mongo():
 
     mongo_instance.test_connectivity()
     mongo_instance.initialize()
-
-    #mongodb+srv://faiselmahmud6:<db_password>@usdacluster.c4u9qpj.mongodb.net/
 
     return mongo_instance
 
