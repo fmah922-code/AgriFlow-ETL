@@ -2,6 +2,8 @@
 # Images -> Running containers
 # Container -> Running process with applciation in it
 
+#docker run --env-file ./.env agriflow
+
 FROM  python:3.11.9
 COPY . /AgriFlow
 RUN pip install -r /AgriFlow/requirements.txt
