@@ -4,7 +4,15 @@
 
 #docker run --env-file ./.env agriflow
 
-FROM  python:3.11.9
+FROM openjdk:11-slim
+
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip && \
+    apt-get clean
+
+ENV JAVA_HOME=/usr/local/openjdk-11
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
 COPY . /AgriFlow
 RUN pip install -r /AgriFlow/requirements.txt
 CMD ["python3","/AgriFlow/AgriFlow.py"]
