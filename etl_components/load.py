@@ -24,7 +24,7 @@ def return_connection_details():
     conn = psycopg2.connect(database= DB_NAME, \
                         user= DB_USER, \
                         password= DB_PASS, \
-                        host = 'localhost', \
+                        host = 'host.docker.internal', \
                         port='5432')
 
 

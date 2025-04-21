@@ -66,7 +66,7 @@ class USDA_API():
                 if response.status_code == 200:
                         
                     # comment out lines 70 - 74 in case get_counts is failing or extract isn't running within 1.5 hours.
-                    time.sleep(5)
+                    time.sleep(2)
                     get_counts = self.session.get(f'{self.url}/get_counts/?key={self.key}{self.params}').json()
 
                     if get_counts['count'] >= 50000:
