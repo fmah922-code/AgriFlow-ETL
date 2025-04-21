@@ -2,6 +2,7 @@
 AgriFlow.py
 
 ETL pipeline which uses the etl_components and scripts directories to load data from USDA_API to finally the PostgresQL DB.
+Dockerized Application with a .env file for allowing passing of environmental variables.
 
 - Steps (from start to finish)
     - Initialize Mongo Database in MongoDB using personal AWS cluster purposefully started beforehand.
@@ -18,8 +19,6 @@ Important Notes:
 
 '''
 Future updates
-
-- Using docker to containerize applications.
 - Using apache airflow to schedule etl.
 - Using DBT to ensure data integrity.
 '''
