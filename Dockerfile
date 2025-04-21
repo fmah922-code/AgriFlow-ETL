@@ -11,7 +11,6 @@ RUN apt-get update && \
     apt-get clean
 
 ENV JAVA_HOME=/usr/local/openjdk-11
-ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
 COPY . /AgriFlow
 RUN pip install -r /AgriFlow/requirements.txt
