@@ -25,7 +25,7 @@ mongo_password=XXXXXXX
 mongo_default_clusterName = XXXXXXXX
 
 # MongoDB Connection URI  
-mongo_client= "XXXXX"  
+mongo_client="XXXXX"  
 
 # Mongo Cluster Name
 mongo_default_clusterName="XXXXX"
