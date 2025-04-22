@@ -25,10 +25,10 @@ mongo_password=XXXXXXX
 mongo_default_clusterName = XXXXXXXX
 
 # MongoDB Connection URI  
-mongo_client="XXXXX"  
+mongo_client=XXXXXXXX  
 
 # Mongo Cluster Name
-mongo_default_clusterName="XXXXX"
+mongo_default_clusterName=XXXXXXXX
 
 # PostgreSQL (pgAdmin4) Login Credentials  
 pgadmin_user=XXXXXXX  
