@@ -19,8 +19,8 @@ usda_commodity_list = ['congr_district_code', 'state_name', 'week_ending', 'coun
 
 mongo_username = os.environ['mongo_username']
 mongo_password = os.environ['mongo_password']
-mongo_default_clusterName = f"{os.environ['mongo_default_clusterName']}"
-mongo_client = f"{os.environ['mongo_client']}"
+mongo_default_clusterName = os.environ['mongo_default_clusterName']
+mongo_client = f"{os.environ['mongo_client'].replace(mongo_default_clusterName,'')}{mongo_default_clusterName}"
 mongo_default_db = 'USDA'
 mongo_default_colname = 'dummy_col'
 
