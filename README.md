@@ -1,4 +1,4 @@
-# AgriFlow ETL Pipeline
+# AgriFlow.py
 
 ## Overview
 AgriFlow is a fully Dockerized ETL pipeline built to streamline the extraction, transformation, and loading of USDA data. By leveraging MongoDB, PySpark, Pandas, and PostgreSQL, the pipeline ensures an efficient and reliable flow of data from the USDA API into a centralized database, ready for analysis. It relies on the organized structure of the `etl_components` and `scripts` directories to tie all stages of the process together seamlessly.
@@ -10,6 +10,28 @@ AgriFlow is a fully Dockerized ETL pipeline built to streamline the extraction, 
 4. **Database Loading**: The unified dataframe is prepared for PostgreSQL by defining the schema, clearing any existing landing tables, and using the `execute_values` function for efficient bulk insertion.
 
 ---
+
+## Instructions  
+
+Ensure all environment variables are correctly configured in a `.env` file within the project root directory before running the pipeline.    
+
+```env
+# USDA API Key  
+usda_key=XXXXXXX  
+
+# MongoDB Credentials  
+mongo_username=XXXXXXX  
+mongo_password=XXXXXXX  
+mongo_default_clusterName = XXXXXXXX
+
+# MongoDB Connection URI  
+mongo_client= XXXXX  
+
+# PostgreSQL (pgAdmin4) Login Credentials  
+pgadmin_user=XXXXXXX  
+pgadmin_password=XXXXXXX  
+```
+
 
 ## Important Notes
 - **Silent Issue in `get_counts`**: Occasionally, the `get_counts` function, responsible for fetching data from the USDA API, may fail silently and cause the process to stall indefinitely.  
