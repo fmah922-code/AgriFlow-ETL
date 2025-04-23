@@ -1,0 +1,6 @@
+services:
+  agriflow-etl:
+    image: fmahmud922/agriflow:latest
+    env_file:
+      - .env
+    command: ["python3", "/AgriFlow/AgriFlow.py"]
