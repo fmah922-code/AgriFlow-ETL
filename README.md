@@ -15,7 +15,7 @@ https://hub.docker.com/layers/fmahmud922/agriflow/latest/images/sha256-e2563b2ca
 
 ## Instructions  
 
-Ensure all environment variables are correctly configured in a `.env` file within the project root directory before running the pipeline.    
+**1.** Ensure all environment variables are correctly configured in a `.env` file within the project root directory before running the pipeline.    
 
 ```env
 # USDA API Key  
@@ -36,9 +36,19 @@ mongo_default_clusterName=XXXXXXXX
 pgadmin_user=XXXXXXX  
 pgadmin_password=XXXXXXX
 
-#Must define landing db, table, and schema names to be dumped in postgreSQL.
+#Must define landing db, table, and schema names to be dumped in PostgreSQL.
 landing_db=XXXXXX
-landing_table=XXXXXXX with format [landing table schema].[landing table name]
+landing_table=XXXXXXX (with format [table_schema].[table_name])
+```
+
+**2.** Have Docker Engine installed on your local machine with this link, and run the following commands in the command line. \
+https://docs.docker.com/engine/install/
+```
+#Run this code first
+docker pull fmahmud922/agriflow:lts 
+
+#Run this afterwards.
+docker run fmahmud922/agriflow:lts
 ```
 
 
