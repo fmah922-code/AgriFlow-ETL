@@ -55,8 +55,6 @@ columns = ['_id','domaincat_desc','year','watershed_code','watershed_desc','coun
          'commodity_desc', 'unit_desc', 'source_desc', 'class_desc','state_ansi', 'short_desc', 'asd_code', 'location_desc','util_practice_desc', 'asd_desc', 
          'state_fips_code', 'freq_desc','domain_desc', 'group_desc']
 
-#Initialization of SparkDF (will be changed later)
-
 #PostgreSQL Credentials
 pgadmin_user = os.environ['pgadmin_user']
 pgadmin_password = os.environ['pgadmin_password']
