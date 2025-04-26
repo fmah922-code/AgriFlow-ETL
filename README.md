@@ -48,7 +48,7 @@ https://docs.docker.com/engine/install/
 docker pull fmahmud922/agriflow:lts 
 
 #Run this afterwards.
-docker run fmahmud922/agriflow:lts
+docker run --env-file .env fmahmud922/agriflow:lts
 ```
 
 
