@@ -16,7 +16,7 @@ from psycopg2.extras import execute_values
 sys.path.append(os.getcwd().replace('\\etl_components',''))
 from config import settings
 
-DB_NAME = 'USDA_DB'
+DB_NAME = os.environ['landing_db']
 DB_USER = settings.pgadmin_user
 DB_PASS = settings.pgadmin_password
 
@@ -34,10 +34,10 @@ def return_connection_details():
 
 
 def create_staging_table(cursor):
-    cursor.execute("""
-    DROP TABLE IF EXISTS ag.CropPrices; 
+    cursor.execute(f"""
+    DROP TABLE IF EXISTS {os.environ['landing_table']}; 
             
-    CREATE UNLOGGED TABLE ag.CropPrices (
+    CREATE UNLOGGED TABLE {os.environ['landing_table']} (
         county_name				text,
         watershed_desc			text,
         statisticcat_desc		text,
@@ -82,13 +82,13 @@ def create_staging_table(cursor):
     """)
 
 
-def populate_data(df, table, conn):
+def populate_data(df, conn):
     columns = ', '.join(df.columns)
     data = tuple(tuple(row) for row in df.values) #
     cur = conn.cursor()
 
 
-    SQL = f"INSERT INTO {table} ({columns}) VALUES %s;"
+    SQL = f"INSERT INTO {os.environ['landing_table']} ({columns}) VALUES %s;"
 
     execute_values(cur, SQL, data)
     conn.commit()
