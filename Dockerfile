@@ -12,6 +12,6 @@ RUN apt-get update && \
 
 ENV JAVA_HOME=/usr/local/openjdk-11
 
-COPY . /AgriFlow
-RUN pip install -r /AgriFlow/requirements.txt
-CMD ["python3","/AgriFlow/AgriFlow.py"]
+COPY . /
+RUN pip install -r /requirements.txt
+CMD ["python3","/AgriFlow.py"]
