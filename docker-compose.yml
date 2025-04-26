@@ -1,3 +1,5 @@
+#docker-compose.yml included for future apache airflow update, and DBT.
+
 services:
   agriflow-etl:
     image: fmahmud922/agriflow:lts
