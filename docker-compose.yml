@@ -3,4 +3,4 @@ services:
     image: fmahmud922/agriflow:lts
     env_file:
       - .env
-    command: ["python3", "/AgriFlow/AgriFlow.py"]
+    command: ["python3", "/AgriFlow.py"]
