@@ -55,7 +55,7 @@ docker run --env-file .env fmahmud922/agriflow:lts
 
 ## Important Notes
 - **Silent Issue in `get_counts`**: Occasionally, the `get_counts` function, responsible for fetching data from the USDA API, may fail silently and cause the process to stall indefinitely.  
-  - **Temporary Fix**: To avoid this, comment out lines 70–74 in `USDA_API.py` located in the `scripts` directory.
+  - **Temporary Fix**: To avoid this, pull from fmahmud/agriflow:dev.
 
 ---
 
