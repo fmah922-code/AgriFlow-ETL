@@ -34,7 +34,11 @@ mongo_default_clusterName=XXXXXXXX
 
 # PostgreSQL (pgAdmin4) Login Credentials  
 pgadmin_user=XXXXXXX  
-pgadmin_password=XXXXXXX  
+pgadmin_password=XXXXXXX
+
+#Must define landing db, table, and schema names to be dumped in postgreSQL.
+landing_db=XXXXXX
+landing_table=XXXXXXX with format [landing table schema].[landing table name]
 ```
 
 
