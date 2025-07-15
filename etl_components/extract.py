@@ -61,8 +61,7 @@ def extract(mongo_conn):
                 data.remove_params('commodity_desc')
                 data.remove_params('year')
             except Exception as e:
-                print(f"Error {e}, {data.call()}")
-                data.remove_params('commodity_desc')
-                data.remove_params('year')     
+                print(f"Error extracting {commodity_desc} for year {year}: {e}")
+                continue 
 
     return 1
